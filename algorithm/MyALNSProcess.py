@@ -5,17 +5,17 @@ Created on Mon Jan  4 20:56:22 2021
 @author: 张瑞娟
 """
 
-from instance.Instance import ImportData as Imp
-from algorithm.InitialSolution import InitialSolution as Init
-from destroyOperator.WorstDestroy import WorstDestroy
-from destroyOperator.RandomDestroy import RandomDestroy
-from repairOperator.GreedyRepair import GreedyRepair as GreedyRepair
-from repairOperator.RandomRepair import RandomRepair as RandomRepair
-from repairOperator.RegretRepair import RegretRepair as RegretRepair
-from destroyOperator.ShawDestroy import ShawDestroy
+from paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.instance.Instance import ImportData as Imp
+from paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.algorithm.InitialSolution import InitialSolution as Init
+from paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.destroyOperator.WorstDestroy import WorstDestroy
+from paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.destroyOperator.RandomDestroy import RandomDestroy
+from paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.repairOperator.GreedyRepair import GreedyRepair as GreedyRepair
+from paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.repairOperator.RandomRepair import RandomRepair as RandomRepair
+from paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.repairOperator.RegretRepair import RegretRepair as RegretRepair
+from paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.destroyOperator.ShawDestroy import ShawDestroy
 
 
-import ControlParameter as Par
+import paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.ControlParameter as Par
 
 import numpy as np
 import random

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-import instance.Instance
+import paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.instance.Instance
 from random import choice
 import copy
 

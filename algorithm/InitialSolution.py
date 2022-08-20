@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import instance.Route as Rou
-import instance.Solution as Sol
-import algorithm.MyALNS as My
+import paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.instance.Route as Rou
+# import paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.instance.Route
+import paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.instance.Solution as Sol
+import paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.algorithm.MyALNS as My
 import numpy as np
 import copy
 

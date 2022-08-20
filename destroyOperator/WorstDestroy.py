@@ -4,8 +4,8 @@ Created on Mon Dec 14 22:00:33 2020
 
 @author: 张瑞娟
 """
-import instance.Instance
-import instance.Route
+import paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.instance.Instance
+import paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.instance.Route
 import copy
 
 

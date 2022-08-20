@@ -5,9 +5,9 @@ Created on Sun Jan 10 17:45:54 2021
 @author: 张瑞娟
 """
 
-import instance.Instance as Ins
-import algorithm.InitialSolution as Init
-import algorithm.MyALNSProcess as Process
+import paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.instance.Instance as Ins
+import paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.algorithm.InitialSolution as Init
+import paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.algorithm.MyALNSProcess as Process
 
 '''
     
