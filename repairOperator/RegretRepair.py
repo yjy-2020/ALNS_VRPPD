@@ -4,10 +4,10 @@ Created on Thu Dec 17 21:16:54 2020
 
 @author: 张瑞娟
 """
-import instance.Route as Rou
-import algorithm.MyALNS as My
+import paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.instance.Route as Rou
+import paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.algorithm.MyALNS as My
 import numpy as np
-import instance.Node
+import paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.instance.Node
 import copy
 
 class RegretRepair():
@@ -75,6 +75,7 @@ class RegretRepair():
                 solution.addRouteToRoutes(newroute)
 
         return solution
+
 
 
 

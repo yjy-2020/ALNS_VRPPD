@@ -4,10 +4,10 @@ Created on Tue Dec 15 20:43:52 2020
 
 @author: 张瑞娟
 """
-import instance.Instance
-import instance.Route as Rou
-import instance.Node as Nod
-import algorithm.MyALNS as My
+import paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.instance.Instance
+import paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.instance.Route as Rou
+import paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.instance.Node as Nod
+import paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.algorithm.MyALNS as My
 
 import copy
 
@@ -54,6 +54,7 @@ class GreedyRepair():
 
 
         return solution
+
 
 
 

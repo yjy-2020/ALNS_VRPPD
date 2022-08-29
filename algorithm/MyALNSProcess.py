@@ -14,7 +14,6 @@ from paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.repairOperator.RandomRepair impo
 from paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.repairOperator.RegretRepair import RegretRepair as RegretRepair
 from paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.destroyOperator.ShawDestroy import ShawDestroy
 
-
 import paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.ControlParameter as Par
 
 import numpy as np
@@ -24,31 +23,27 @@ import copy
 import math
 
 
-
 class Process():
-
-    temStart = 100 #起始温度
-    destroyList = [RandomDestroy, ShawDestroy, WorstDestroy] #destroy算子列表
+    temStart = 100  # 起始温度
+    destroyList = [RandomDestroy, ShawDestroy, WorstDestroy]  # destroy算子列表
     repairList = [GreedyRepair, RandomRepair, RegretRepair]
-
 
     def __init__(self, ins, initialSol):
         self.alns = Par.Parameter()
         self.temTermin = self.temStart * self.alns.t
-        self.timeOperator = copy.deepcopy(self.creatDict()) #记录每个算子选中次数
-        self.scoreOperator = copy.deepcopy(self.creatDict()) #记录每个算子的得分
+        self.timeOperator = copy.deepcopy(self.creatDict())  # 记录每个算子选中次数
+        self.scoreOperator = copy.deepcopy(self.creatDict())  # 记录每个算子的得分
         self.ins = ins
         self.numberOfNode = len(self.ins.customerID)
-        self.destroyNr = int(self.alns.drate * self.numberOfNode)  #destroy的点的数量
+        self.destroyNr = int(self.alns.drate * self.numberOfNode)  # destroy的点的数量
         self.time = 0
-        #self.bestVal = []
-        #self.currentVal = []
+        # self.bestVal = []
+        # self.currentVal = []
         self.initialSol = initialSol.getInitialSolution()
-        self.destroyList = [RandomDestroy, ShawDestroy, WorstDestroy] #destroy算子列表
+        self.destroyList = [RandomDestroy, ShawDestroy, WorstDestroy]  # destroy算子列表
         self.repairList = [GreedyRepair, RandomRepair, RegretRepair]
-        self.weightDestroy = np.array([1,1,1],dtype = float)  #每个destroy算子的权重
-        self.weightRepair = np.array([1,1,1], dtype = float)   #每个repair算子的权重
-
+        self.weightDestroy = np.array([1, 1, 1], dtype=float)  # 每个destroy算子的权重
+        self.weightRepair = np.array([1, 1, 1], dtype=float)  # 每个repair算子的权重
 
     def iteration(self):
 
@@ -56,7 +51,6 @@ class Process():
         currentSol = copy.deepcopy(self.initialSol)
         bestVal = []
         currentVal = []
-
 
         bestVal.append(globalSol.totalCost)
         currentVal.append(currentSol.totalCost)
@@ -69,7 +63,7 @@ class Process():
         time_2 = 0
         time_3 = 0
         while T >= self.temTermin:
-            #print(ite)
+            # print(ite)
 
             p_destroy = self.weightDestroy / sum(self.weightDestroy)
             # print(p_destroy)
@@ -80,19 +74,18 @@ class Process():
             for i in range(self.alns.fre):
 
                 start_1 = time.time()
-                destroy = np.random.choice(self.destroyList, p = p_destroy)
+                destroy = np.random.choice(self.destroyList, p=p_destroy)
                 removeCus, removedSol = destroy.destroy(currentSol, self.destroyNr, self.ins)
-                repair = np.random.choice(self.repairList, p = p_repair)
+                repair = np.random.choice(self.repairList, p=p_repair)
                 tempSol = repair.repair(removedSol, removeCus, self.ins)
                 end_1 = time.time()
-                #print(end_1-start_1)
-                time_1 += end_1 -start_1
+                # print(end_1-start_1)
+                time_1 += end_1 - start_1
                 self.timeOperator = self.upDict(self.timeOperator, destroy, repair, 1)
 
                 start_2 = time.time()
                 tempVal = tempSol.totalCost
-                p = math.exp((currentSol.totalCost - tempVal)/T)
-
+                p = math.exp((currentSol.totalCost - tempVal) / T)
 
                 if tempVal < globalSol.totalCost:
                     globalSol = copy.deepcopy(tempSol)
@@ -118,14 +111,14 @@ class Process():
 
                 end_2 = time.time()
                 time_2 += end_2 - start_2
-                #print('判断时间：', end_2-start_2)
+                # print('判断时间：', end_2-start_2)
 
                 if noImprove >= 10:
                     p_destroy, p_repair = self.initialWeight()
                     currentSol = copy.deepcopy(globalSol)
                     noImprove = 0
 
-            #每完成一次内层循环，更新一次算子权重
+            # 每完成一次内层循环，更新一次算子权重
             start_3 = time.time()
             for operator in self.timeOperator:
                 # print('self.destroyList:', type(self.destroyList))
@@ -148,41 +141,40 @@ class Process():
         print('判断操作：', time_2)
         print('更新权重：', time_3)
 
-        #输出运行时间和各算子使用次数
+        # 输出运行时间和各算子使用次数
         print('总运行时间为%.2f\n' % self.time)
-        #print('最优值：', globalSol.totalCost)
+        # print('最优值：', globalSol.totalCost)
         print('bestVal:', bestVal)
         print('currentVal:', currentVal)
-        #print('最优解：', globalSol)
+        # print('最优解：', globalSol)
         for key, value in self.timeOperator.items():
-            print('{}:{}'.format(key.__name__,value))
+            print('{}:{}'.format(key.__name__, value))
 
         return globalSol
 
-
-    #创建包含所有算子的字典
+    # 创建包含所有算子的字典
     def creatDict(self):
         key = [RandomDestroy, ShawDestroy, WorstDestroy, GreedyRepair, RandomRepair, RegretRepair]
         value = np.zeros(6, int)
         dictionary = dict(zip(key, value))
         return dictionary
 
-    #更新字典(更新算子使用次数和分数)
+    # 更新字典(更新算子使用次数和分数)
     def upDict(self, dictionary, destroy, repair, val):
         dictionary[destroy] += val
         dictionary[repair] += val
         return dictionary
 
-    #初始化算子权重
+    # 初始化算子权重
     def initialWeight(self):
-        self.weightDestroy = np.array([1,1,1], dtype = float)
-        self.weightRepair = np.array([1,1,1], dtype = float)
+        self.weightDestroy = np.array([1, 1, 1], dtype=float)
+        self.weightRepair = np.array([1, 1, 1], dtype=float)
         p_destroy = self.weightDestroy / sum(self.weightDestroy)
         p_repair = self.weightRepair / sum(self.weightRepair)
-        return  p_destroy, p_repair
+        return p_destroy, p_repair
 
-    #更新权重
-    #算子使用次数为0
+    # 更新权重
+    # 算子使用次数为0
     def upWeight1(self, operator):
         if operator in self.destroyList:
             index1 = self.destroyList.index(operator)
@@ -196,7 +188,7 @@ class Process():
             self.weightRepair[index2] = self.weightRepair[index2] * (1 - self.alns.r)
             # print('0weightRepair:', self.weightRepair)
 
-    #算子使用次数不为0
+    # 算子使用次数不为0
     def upWeight2(self, operator):
         if operator in self.destroyList:
             index1 = self.destroyList.index(operator)
@@ -204,52 +196,8 @@ class Process():
             + self.alns.r * self.scoreOperator[operator] / self.timeOperator[operator]
             # print('1weightDestroy:', self.weightDestroy)
         else:
-            #print(operator)
+            # print(operator)
             index2 = self.repairList.index(operator)
             self.weightRepair[index2] = self.weightRepair[index2] * (1 - self.alns.r)
             + self.alns.r * self.scoreOperator[operator] / self.timeOperator[operator]
             # print('1weightRepair:', self.weightRepair)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

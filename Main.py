@@ -8,6 +8,7 @@ Created on Sun Jan 10 17:45:54 2021
 import paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.instance.Instance as Ins
 import paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.algorithm.InitialSolution as Init
 import paper.PI_ALNS.code_learning.ALNS_VRPPD_yjy.algorithm.MyALNSProcess as Process
+import time
 
 '''
     
@@ -33,7 +34,10 @@ def main():
     # print('最优解' + globalSol)
 
 if __name__ == '__main__':
+    a = time.time()
     main()
+    b = time.time()
+    print('计算共用时%.2f秒'%(b-a))
 
 
 
